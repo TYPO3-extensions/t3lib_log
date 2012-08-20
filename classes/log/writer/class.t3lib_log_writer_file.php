@@ -176,7 +176,12 @@ class t3lib_log_writer_File extends t3lib_log_writer_Abstract {
 
 		$logFileDirectory = dirname($this->logFile);
 		if (!@is_dir($logFileDirectory)) {
-			t3lib_div::mkdir_deep($logFileDirectory);
+			if (t3lib_div::compat_version('4.5')) {
+				$logFileDirectory = substr($logFileDirectory, strlen(PATH_site));
+				t3lib_div::mkdir_deep(PATH_site, $logFileDirectory);
+			} else {
+				t3lib_div::mkdir_deep($logFileDirectory);
+			}
 
 				// only create .htaccess, if we created the directory on our own
 			$this->createHtaccessFile($logFileDirectory . '/.htaccess');
