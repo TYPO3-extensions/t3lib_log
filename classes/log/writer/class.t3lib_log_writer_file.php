@@ -176,7 +176,7 @@ class t3lib_log_writer_File extends t3lib_log_writer_Abstract {
 
 		$logFileDirectory = dirname($this->logFile);
 		if (!@is_dir($logFileDirectory)) {
-			if (t3lib_div::compat_version('4.5')) {
+			if (t3lib_utility_VersionNumber::convertVersionNumberToInteger(TYPO3_version) < 4006000) {
 				$logFileDirectory = substr($logFileDirectory, strlen(PATH_site));
 				t3lib_div::mkdir_deep(PATH_site, $logFileDirectory);
 			} else {
